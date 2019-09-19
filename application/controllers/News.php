@@ -4,8 +4,11 @@ class News extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->helper('url_helper');
 
-        $this->load->view('templates/header');
+        $this->username = $this->session->username ?? null;
+        $data['username'] = $this->username;
+        $this->load->view('templates/header', $data);
     }
 
     public function index()

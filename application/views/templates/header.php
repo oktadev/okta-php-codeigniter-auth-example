@@ -13,3 +13,21 @@
             <div class="container">
                 <div class="content">
                 <h1>Code Igniter + Okta Login Example</h1>
+                <?php
+                    if (isset($username)) {
+                ?>
+                        <p>
+                            Logged in as <?php echo $username; ?>
+                        </p>
+                        <p>
+                            <a href="<?php echo site_url('news/create'); ?>">New article</a>
+                            | <a href="<?php echo site_url('logout'); ?>">Log Out</a>
+                        </p>
+                <?php
+                    } else {
+                ?>
+                        <p>Not logged in</p>
+                        <p><a href="<?php echo site_url('login'); ?>">Log In</a></p>
+                <?php
+                    }
+                ?>

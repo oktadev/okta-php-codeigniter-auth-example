@@ -52,3 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'news';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['login'] = 'user/login';
+$route['logout'] = 'user/logout';
+$route['callback'] = 'user/callback';
+
+$route['news/create'] = 'news/create';
+$route['news/(:any)'] = 'news/view/$1';
