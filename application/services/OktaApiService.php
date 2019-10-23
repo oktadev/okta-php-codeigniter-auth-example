@@ -24,6 +24,7 @@ class OktaApiService
             'client_id' => $this->clientId,
             'redirect_uri' => $this->redirectUri,
             'state' => $state,
+            'scope' => 'openid email',
         ]);
 
         return $url;
@@ -53,26 +54,15 @@ class OktaApiService
             'client_secret' => $this->clientSecret
         ]);
 
-        if (! isset($response->access_token)) {
+        if (! isset($response->id_token)) {
             $result['error'] = true;
-            $result['errorMessage'] = 'Error fetching access token!';
+            $result['errorMessage'] = 'Error fetching ID token!';
             return $result;
         }
 
-        $token = $this->httpRequest($metadata->introspection_endpoint, [
-            'token' => $response->access_token,
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret
-        ]);
+        $claims = json_decode(base64_decode(explode('.', $response->id_token)[1]));
 
-        if ($token->active != 1) {
-            $result['error'] = true;
-            $result['errorMessage'] = 'Access token is inactive!';
-            return $result;
-        }
-
-        $result['username'] = $token->username;
-        $result['access_token'] = $response->access_token;
+        $result['username'] = $claims->email;
         $result['success'] = true;
         return $result;
     }

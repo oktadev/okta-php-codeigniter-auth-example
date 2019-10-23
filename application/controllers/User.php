@@ -40,7 +40,6 @@ class User extends CI_Controller
 
         $this->session->userId = $userId;
         $this->session->username = $result['username'];
-        $this->session->access_token = $result['access_token'];
         redirect('/');
     }
 
